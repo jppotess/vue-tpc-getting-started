@@ -8,6 +8,7 @@
 
       class="c-question"
     >
+      {{ currentQuestionAnswered }}
 			<h2 class="text-center">{{ question.questionText}}</h2>
 			<div class="c-question__optionsContainer">
 				<div class="c-question__option"
@@ -19,6 +20,7 @@
               optionInfo: questionOption
             }
           )"
+          v-bind:class="{'is-selected': isSelectedOption(QIndex, OIndex)}"
         >
 					<h3>{{ questionOption.title }}</h3>
 					<p>{{ questionOption.text}}</p>
@@ -32,7 +34,8 @@
 					Start Over
 				</button>
 
-				<button v-if="question.answered" class="btn btn-success"
+				<button class="btn btn-success"
+          v-if="currentQuestionAnswered"
 					v-on:click="$store.commit('nextQuestion')"
 				>
 					Continue
@@ -69,20 +72,41 @@ export default {
 
     questionsTotal: function() {
       return this.questions.length
+    },
+
+    currentQuestionAnswered: function(){
+      return this.$store.state.answersData[this.$store.state.currentQuestion - 1]
+    }
+
+  },
+
+  methods: {
+
+    isSelectedOption: function(QIndex, OIndex) {
+
+      var sameQuestion = false
+      var sameOption = false
+
+      if (QIndex + 1 === this.$store.state.currentQuestion){
+        sameQuestion = true
+      }
+
+      if (this.$store.state.answersData[QIndex] !== undefined){
+        if ( OIndex + 1 === this.$store.state.answersData[QIndex].optionNumber) {
+          sameOption = true
+        }
+      } else {
+        sameOption = false
+      }
+
+      if (sameQuestion && sameOption) {
+        return true
+      } else {
+        return false
+      }
+
     }
   },
-
-  created() {
-    console.log('hello')
-    console.log(this.questions)
-    console.log(this.questionsTotal)
-  },
-
-  mounted() {
-    console.log(this.questionsTotal)
-  }
-
-
 }
 
 </script>
@@ -113,6 +137,10 @@ export default {
             flex: 1;
             text-align: center;
             padding: 1em;
+        }
+
+        .c-question__option.is-selected {
+          background-color: green;
         }
 
     .c-question__navContainer {
