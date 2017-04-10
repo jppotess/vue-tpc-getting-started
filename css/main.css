@@ -1,0 +1,30 @@
+.questions {
+
+}
+
+.c-question {
+
+}
+
+.info {
+    background-color: whitesmoke;
+}
+
+
+.c-question {
+
+}
+
+    .c-question__optionsContainer {
+        display: flex;
+    }
+
+        .c-question__option {
+            flex: 1;
+        }
+
+    .c-question__navContainer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
