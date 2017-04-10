@@ -111,7 +111,7 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss">
 .questions {
 
 }
@@ -137,10 +137,14 @@ export default {
             flex: 1;
             text-align: center;
             padding: 1em;
-        }
 
-        .c-question__option.is-selected {
-          background-color: green;
+            &.is-selected {
+              background-color: green;
+            }
+
+            &:hover {
+              cursor: pointer;
+            }
         }
 
     .c-question__navContainer {
